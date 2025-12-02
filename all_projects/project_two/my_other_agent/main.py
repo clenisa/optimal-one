@@ -1,3 +1,18 @@
+import sys
+from pathlib import Path
+
+# Fix for imports when module is loaded directly by LangGraph
+# The module might be loaded from /deps/project_two/my_other_agent/main.py
+# We need to ensure the parent directory (project_two) is in sys.path
+_file = Path(__file__).resolve()
+_parent = _file.parent  # my_other_agent directory
+_grandparent = _parent.parent  # project_two directory
+
+# Add grandparent to path so 'my_other_agent' package can be imported
+if str(_grandparent) not in sys.path:
+    sys.path.insert(0, str(_grandparent))
+
+# Use absolute import - this works when project_two is in sys.path
 from my_other_agent.utils.build_graph import workflow
 
 graph = workflow.compile()
