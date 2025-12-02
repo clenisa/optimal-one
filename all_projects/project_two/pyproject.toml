@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "project-two"
+version = "0.1.0"
+description = "Project two agent for LangGraph cloud"
+requires-python = ">=3.9"
+dependencies = [
+    "langgraph>=0.2.0",
+    "langchain-anthropic>=0.1.20",
+    "langchain-community>=0.2.11",
+]
+
+[tool.setuptools.package-data]
+"*" = ["**/*"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["my_other_agent*"]
