@@ -1,3 +1,3 @@
-from .utils.build_graph import workflow
+from my_agent.utils.build_graph import workflow
 
 graph = workflow.compile()
