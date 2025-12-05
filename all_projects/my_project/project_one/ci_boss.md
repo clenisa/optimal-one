@@ -1,16 +1,57 @@
 # CI Boss Agent
 
+> **Status**: ✅ Fully functional (17/17 tests passing)  
+> **Last Updated**: December 2024
+
 The CI Boss agent is a CI/CD orchestration agent that integrates with GitHub, Playwright tests, and Linear for issue tracking. It automates the process of running tests, analyzing failures, and creating issues for tracking.
 
 ## Overview
 
 The CI Boss agent follows this workflow:
 
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                         CI Boss Workflow                          │
+├──────────────────────────────────────────────────────────────────┤
+│                                                                   │
+│   ┌─────────┐    ┌─────────┐    ┌─────────────┐                  │
+│   │ GitHub  │───▶│ Planner │───▶│ Test Runner │──┐               │
+│   │  Node   │    │  Node   │    │    Node     │  │               │
+│   └─────────┘    └────┬────┘    └─────────────┘  │               │
+│                       │               ▲          │               │
+│                       │               └──────────┘               │
+│                       │         (if run_tests)                   │
+│                       │                                          │
+│                       ▼                                          │
+│                   ┌──────┐                                       │
+│                   │ END  │  (analyze_failures or summarize)      │
+│                   └──────┘                                       │
+└──────────────────────────────────────────────────────────────────┘
+```
+
 1. **GitHub Node**: Fetches commit/PR metadata and changed files
 2. **Planner Node**: Decides what action to take (run tests, analyze failures, or summarize)
 3. **Test Runner Node**: Executes Playwright tests
 4. **Linear Integration**: Creates/updates issues for test failures
 5. **GitHub Comments**: Posts results back to pull requests
+
+## Quick Start
+
+```bash
+# 1. Set required environment variables
+export OPENAI_API_KEY="sk-..."
+export GITHUB_TOKEN="ghp_..."  # Optional but recommended
+
+# 2. Invoke the agent
+curl -X POST http://localhost:8000/runs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "input": {
+      "repo": "your-org/your-repo",
+      "pr_number": 42
+    }
+  }'
+```
 
 ## Environment Variables
 

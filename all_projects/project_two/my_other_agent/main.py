@@ -1,3 +1,26 @@
+"""
+my_second_agent - Anthropic Claude-based Conversational Assistant
+
+This agent provides a conversational assistant powered by Anthropic Claude models
+with web search capabilities via Tavily.
+
+Available models (configurable via `model_name`):
+    - sonnet (default): Claude 3 Sonnet - balanced performance and capability
+    - haiku: Claude 3 Haiku - fastest, most cost-effective
+    - opus: Claude 3 Opus - most capable, best for complex reasoning
+
+Environment Variables:
+    ANTHROPIC_API_KEY: Required for Anthropic Claude model access
+    TAVILY_API_KEY: Required for web search functionality
+
+Example Usage:
+    >>> from my_other_agent.main import graph
+    >>> result = graph.invoke(
+    ...     {"messages": [{"role": "user", "content": "What is LangGraph?"}]},
+    ...     config={"configurable": {"model_name": "sonnet"}}
+    ... )
+"""
+
 import sys
 from pathlib import Path
 

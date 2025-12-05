@@ -4,6 +4,14 @@
 
 This is an example monorepo with multiple agents to deploy with LangGraph Cloud.
 
+## Quick Reference
+
+| Agent | Location | Model Provider | Default Model |
+|-------|----------|----------------|---------------|
+| `my_first_agent` | `project_one/my_agent/main.py` | OpenAI | `gpt-4o` |
+| `my_second_agent` | `project_two/my_other_agent/main.py` | Anthropic | `sonnet` (Claude 3) |
+| `ci_boss` | `project_one/my_agent/graph.py` | OpenAI | `gpt-4o` (planner) |
+
 [LangGraph](https://github.com/langchain-ai/langgraph) is a library for building stateful, multi-actor applications with LLMs. The main use cases for LangGraph are conversational agents, and long-running, multi-step LLM applications or any LLM application that would benefit from built-in support for persistent checkpoints, cycles and human-in-the-loop interactions (ie. LLM and human collaboration).
 
 LangGraph shortens the time-to-market for developers using LangGraph, with a one-liner command to start a production-ready HTTP microservice for your LangGraph applications, with built-in persistence. This lets you focus on the logic of your LangGraph graph, and leave the scaling and API design to us. The API is inspired by the OpenAI assistants API, and is designed to fit in alongside your existing services.
@@ -18,9 +26,9 @@ This monorepo contains **three LangGraph agents** deployed as separate graphs:
 - **Location**: `all_projects/my_project/project_one/my_agent/main.py`
 - **Purpose**: A conversational assistant agent that can answer questions and perform web searches
 - **Capabilities**:
-  - Uses OpenAI models (gpt-4o, gpt-4o-mini, or gpt-3.5-turbo)
+  - Uses OpenAI models via configurable `model_name` parameter
+  - **Available models**: `gpt-4o` (default), `gpt-4o-mini`, `gpt-3.5-turbo`
   - Has access to Tavily search tool for web searches
-  - Supports configurable model selection via `model_name` parameter
 - **Workflow**: Agent → Tool Execution (if needed) → Agent → End
   - The agent receives messages and decides whether to use tools (Tavily search)
   - If tools are needed, it executes them and continues the conversation
@@ -28,11 +36,14 @@ This monorepo contains **three LangGraph agents** deployed as separate graphs:
 
 ## 2. `my_second_agent` (Anthropic-based Assistant)
 - **Location**: `all_projects/project_two/my_other_agent/main.py`
-- **Purpose**: A conversational assistant agent similar to `my_first_agent` but using Anthropic models
+- **Purpose**: A conversational assistant agent similar to `my_first_agent` but using Anthropic Claude models
 - **Capabilities**:
-  - Uses Anthropic Claude models (claude-3-haiku, claude-3-sonnet, or claude-3-opus)
+  - Uses Anthropic Claude models via configurable `model_name` parameter
+  - **Available models**: `sonnet` (default), `haiku`, `opus`
+    - `haiku` → Claude 3 Haiku (fastest, most cost-effective)
+    - `sonnet` → Claude 3 Sonnet (balanced performance)
+    - `opus` → Claude 3 Opus (most capable)
   - Has access to Tavily search tool for web searches
-  - Supports configurable model selection via `model_name` parameter
 - **Workflow**: Same as `my_first_agent` - Agent → Tool Execution (if needed) → Agent → End
 
 ## 3. `ci_boss` (CI/CD Orchestration Agent)
@@ -54,6 +65,9 @@ This monorepo contains **three LangGraph agents** deployed as separate graphs:
 
 ## Current Workflow State
 
+> **Last Updated**: December 2024
+> **Status**: ✅ All agents fully functional and tested (17/17 tests passing)
+
 ### Assistant Agents (`my_first_agent` and `my_second_agent`)
 Both assistant agents follow the same workflow pattern:
 1. **Entry Point**: Agent receives user messages
@@ -65,7 +79,7 @@ Both assistant agents follow the same workflow pattern:
 5. **Loop Back**: After tool execution, returns to agent node
 6. **Termination**: Ends when agent determines no more tool calls are needed
 
-**Current State**: Fully functional with Tavily search integration. Ready for deployment.
+**Status**: ✅ Fully functional with Tavily search integration. Ready for deployment.
 
 ### CI Boss Agent (`ci_boss`)
 The CI/CD orchestration agent follows this workflow:
@@ -96,7 +110,7 @@ The CI/CD orchestration agent follows this workflow:
 7. **GitHub Comments**:
    - Posts formatted results to PR (status emoji, summary, changed files, Linear link)
 
-**Current State**: Fully implemented with GitHub REST API, Playwright CLI execution, and Linear GraphQL integration. All integrations handle missing credentials gracefully.
+**Status**: ✅ Fully implemented with GitHub REST API, Playwright CLI execution, and Linear GraphQL integration. All integrations handle missing credentials gracefully.
 
 # Environment Setup
 

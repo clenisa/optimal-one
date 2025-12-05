@@ -5,7 +5,10 @@ my_agent/graph.py
 my_agent/linear_client.py
 my_agent/main.py
 my_agent/__pycache__/__init__.cpython-312.pyc
+my_agent/__pycache__/github_client.cpython-312.pyc
 my_agent/__pycache__/graph.cpython-312.pyc
+my_agent/__pycache__/linear_client.cpython-312.pyc
+my_agent/__pycache__/main.cpython-312.pyc
 my_agent/utils/__init__.py
 my_agent/utils/build_graph.py
 my_agent/utils/__pycache__/__init__.cpython-312.pyc

@@ -1,3 +1,26 @@
+"""
+my_first_agent - OpenAI-based Conversational Assistant
+
+This agent provides a conversational assistant powered by OpenAI models
+with web search capabilities via Tavily.
+
+Available models (configurable via `model_name`):
+    - gpt-4o (default): Most capable, best for complex tasks
+    - gpt-4o-mini: Faster, good balance of speed and capability
+    - gpt-3.5-turbo: Fastest, most cost-effective
+
+Environment Variables:
+    OPENAI_API_KEY: Required for OpenAI model access
+    TAVILY_API_KEY: Required for web search functionality
+
+Example Usage:
+    >>> from my_agent.main import graph
+    >>> result = graph.invoke(
+    ...     {"messages": [{"role": "user", "content": "What is LangGraph?"}]},
+    ...     config={"configurable": {"model_name": "gpt-4o"}}
+    ... )
+"""
+
 import sys
 from pathlib import Path
 
